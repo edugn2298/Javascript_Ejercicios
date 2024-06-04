@@ -1,34 +1,50 @@
-let opcion = ['Piedra','Papel','Tijeras'];
-const text = document.getElementById('contenido');
+window.addEventListener('DOMContentLoaded', () => {
+  let opcion = ['Piedra','Papel','Tijeras'];
+  const contenido = document.querySelector('#contenido');
 
-player1 = undefined;
-player2 =undefined;
+  let player1 = undefined;
+  let player2 =undefined;
 
-function juego(){
-  let finalizar = 'SI';
-  while(finalizar.toUpperCase() == "SI" ){
-    // Obtener la opción del jugador 1
-    let opcionJugador1 = parseInt(prompt("Ingresa la opción del Jugador 1 (0=Piedra, 1=Papel, 2=Tijeras): "));
-    player1 = opcion[opcionJugador1];
+  const piedra1 = document.querySelector('#piedra1');
+  const piedra2 = document.querySelector('#piedra2');
+  const papel1 = document.querySelector('#papel1');
+  const papel2 = document.querySelector('#papel2');
+  const tijera1 = document.querySelector('#tijera1');
+  const tijera2 = document.querySelector('#tijera2');
+  const iniciar = document.querySelector('#iniciar');
+  const reset = document.querySelector('#reset');
+  const detener = document.querySelector('#detener');
 
-    // Obtener la opción del jugador 2
-    let opcionJugador2 = parseInt(prompt("Ingresa la opción del Jugador 2 (0=Piedra, 1=Papel, 2=Tijeras): "));
-    player2 = opcion[opcionJugador2];
+  piedra1.addEventListener( 'click', () => { player1 = 'Piedra'; papel1.disabled = true; tijera1.disabled = true;} );
+  piedra2.addEventListener( 'click', () => {player2 = 'Piedra'; papel2.disabled = true; tijera2.disabled = true;} );
+  papel1.addEventListener( 'click', () => {player1 = 'Papel'; piedra1.disabled = true; tijera1.disabled = true;} );
+  papel2.addEventListener( 'click', () => {player2 = 'Papel'; piedra2.disabled = true; tijera2.disabled = true;} );
+  tijera1.addEventListener( 'click', () => {player1 = 'Tijeras'; piedra1.disabled = true; papel1.disabled = true;} );
+  tijera2.addEventListener( 'click', () => {player2 = 'Tijeras'; piedra2.disabled = true; papel2.disabled = true;} );
 
+  iniciar.addEventListener( 'click', () => { console.log('Juego Iniciado'); juego(); } );
+  reset.addEventListener( 'click', () => {console.log('Juego detenido');});
+  detener.addEventListener( 'click', () => {console.log('Reincio');});
+
+  function juego(){
+    let finalizar = 'SI';
+    while(finalizar.toUpperCase() == "SI" ){
+      
+      resultado(player1,player2);
+
+    }
+  }
+
+  function resultado(){
     if( player1===player2){
-      document.querySelector('#contenido').textContent = 'Empate';
+      contenido.textContent = 'Empate';
     } else if(player1==='Piedra' && player2==='Tijeras' || player1==='Tijeras' && player2==='Papel' || player1==='Papel' && player2==='Piedra' ) {
-      document.querySelector('#contenido').textContent = 'EL ganador es el jugador 1';
+      contenido.textContent = 'EL ganador es el jugador 1';
       console.log('EL ganador es el jugador 1');
     } else {
-      document.querySelector('#contenido').textContent = 'EL ganador es el jugador 2';
+      contenido.textContent = 'EL ganador es el jugador 2';
       console.log('EL ganador es el jugador 2');
     }
-
-    finalizar = prompt('¿Quieres jugar otra ronda? (SI/NO)').toUpperCase();
   }
-  console.log('Salí')
-}
-
-juego();
+});
 
